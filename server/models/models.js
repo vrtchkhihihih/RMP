@@ -79,3 +79,14 @@ const OrderItem = sequelize.define('orderItems', {
         type: DataTypes.DECIMAL,
     },
 });
+
+Client.hasMany(Order)
+Order.belongsTo(Client)
+
+Order.hasMany(OrderItem)
+OrderItem.belongsTo(Order)
+
+Product.hasMany(OrderItem)
+OrderItem.belongsTo(Product)
+
+export default{ Client, Product, Order, OrderItem}

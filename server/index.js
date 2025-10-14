@@ -18,7 +18,7 @@
 
 import 'dotenv/config' //ES modules
 import sequelize from './db.js'
-
+import models from './models/models.js'
 import express from 'express';
 const app = express();
 const PORT = process.env.PORT
@@ -30,10 +30,12 @@ try {
     })
     await sequelize.authenticate()
     console.log('успешное подключение к БД');
+    
+await sequelize.sync({alter:true});
+
 }   catch(error) {
         console.log('Не удалось подключиться к БД', error)
     }
 }
 start();
-
 
