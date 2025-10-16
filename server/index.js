@@ -20,8 +20,12 @@ import 'dotenv/config' //ES modules
 import sequelize from './db.js'
 import models from './models/models.js'
 import express from 'express';
+import cors from 'cors';
+import router from './routers/router.js'
+
 const app = express();
 const PORT = process.env.PORT
+app.use('/api', router)
 
 const start = async () => {
 try {
@@ -31,7 +35,7 @@ try {
     await sequelize.authenticate()
     console.log('успешное подключение к БД');
     
-await sequelize.sync({alter:true});
+await sequelize.sync();
 
 }   catch(error) {
         console.log('Не удалось подключиться к БД', error)
