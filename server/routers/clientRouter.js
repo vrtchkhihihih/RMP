@@ -1,20 +1,11 @@
-import models from '../models/models.js';
 import Router from 'express';
+import {getClients} from '../controllers/clientController.js'
+import {postClients} from '../controllers/clientController.js'
 
-const clientRouter = new Router();
-const { Client } = models;
+const router = new Router();
 
-clientRouter.get('/list', async(reg, res) => {
-    try {
-        const getClients = await Client.findAll();
-        res.status(200).json(getClients)
-    }
-    catch(error){
-        res.status(500).json({
-            message: "ошибка сервера при получения данных"
-        });
-    };
-});
+router.get('/getClients', getClients);
+router.post('/postClients', postClients)
 
 
-export default clientRouter
+export default router

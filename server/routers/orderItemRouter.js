@@ -1,20 +1,11 @@
-import models from '../models/models.js';
 import Router from 'express';
+import {getOrdersItems} from '../controllers/orderItemController.js'
+import {postOrdersItems} from '../controllers/orderItemController.js'
 
-const orderItemRouter = new Router();
-const { OrderItem } = models;
+const router = new Router();
 
-orderItemRouter.get('/list', async(reg, res) => {
-    try {
-        const getorderItem = await OrderItem.findAll();
-        res.status(200).json(getorderItem)
-    }
-    catch(error){
-        res.status(500).json({
-            message: "ошибка сервера при получения данных"
-        });
-    };
-});
+router.get('/getorderItems', getOrdersItems);
+router.post('/postorderItems', postOrdersItems);
 
 
-export default orderItemRouter
+export default router
