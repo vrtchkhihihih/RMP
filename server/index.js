@@ -1,45 +1,59 @@
-// reguire('dotenv').config() - метод commonJS
+// require('dotenv').config(); //commonJS
+// import 'dotenv/config' // ES modules
+// commonJS
 
-//commonJS
 // const express = require('express');
-// const {Router} = require('express');
-// module.exports = myFune;
-// module.exports = {class1, class2};
-// exports.myFune = () => {}
+// const {router} = require('express');
 
-//ESM
-// import express from 'express'
-// import {Router} from 'express'
-// import * as models from './node_modules'
+// module.exports = myfunc;
 
-//export default myClass 
-//export {class1, class2} 
-//export const myFunc = () => {}
+// exports.myfunc = () => {
 
-import 'dotenv/config' //ES modules
-import sequelize from './db.js'
-import models from './models/models.js'
+// };
+
+
+// ESM
+// import express from 'express';
+// import {router} from 'express';
+
+// import * as models from './models';
+
+
+// export default myClass;
+// export {class1, class2};
+
+// export const myFunc = () => {
+
+// };
+
+// импорт нужных библиотек/функций
+import 'dotenv/config';
 import express from 'express';
+import sequelize from './db.js';
 import cors from 'cors';
-import router from './routers/router.js'
+import Router from './routes/router.js'
+import errorHandler from './middleware/errorHandler.js'
 
 const app = express();
-const PORT = process.env.PORT
-app.use('/api', router)
-
-const start = async () => {
-try {
-    app.listen(PORT, () => {
-        console.log (`сервер работает на порту ${PORT}`);
-    })
-    await sequelize.authenticate()
-    console.log('успешное подключение к БД');
-    
-await sequelize.sync();
-
-}   catch(error) {
-        console.log('Не удалось подключиться к БД', error)
+app.use(errorHandler);
+app.use(cors());
+app.use(express.json());
+app.use('/api', Router);
+const PORT = process.env.PORT;
+// начала асинхронной функции
+const start = async() => {
+    try {
+        // функция запуска сервера
+        app.listen(PORT,() => {
+    console.log(`Сервер работает на порту ${PORT}`);
+        });
+         await sequelize.authenticate();
+            console.log("Подключение к базе данных выполнено успешно")
+         await sequelize.sync();
     }
-}
+    catch(error){
+        console.log("не удалось подключиться к базе данных", error);
+    };
+};
 start();
 

@@ -1,35 +1,31 @@
-import models from '../models/models.js';
+import models from "../models/models.js"
 
-const { Client } = models;
+const {Client} = models;
 
-export const getClients = async(reg, res, next) => {
-    try {
-        const data = await Client.findAll(); 
+export const getClients = async(req,res,next) => {
+        try{
+            const getClients = await Client.findAll()
+            res.status(200).json(getClients)
+        }
+        catch(err){
+            next(err)
+        };
+}
 
-        res.status(200).json(data)
+export const postClient = async(req,res,next) => {
+    try{
+        const {name, rating, age} = req.body;
+        const newClient = await Client.create({name, rating, age});
+        res.status(201).json({message:'Добавлено'});
     }
-    catch(error){
+    catch(err){
         next(err)
     };
-};
-
-
-export const postClients = async(reg, res, next) => {
-    try {
-        const {name, raiting, age} = req.body;
-        const data = await Client.create({name, raiting, age}); 
-
-        res.status(201).json({message:'Добавлено'})
-    }
-    catch(error){
-       next(err)
-    };
-};
+}
 
 export const getOneClient = async(req,res,next) => {
     try{
         const {id} = req.params;
-    
         const oneClient = await Client.findOne({where: {id}})
 
         res.status(200).json(oneClient)

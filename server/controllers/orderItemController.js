@@ -1,25 +1,25 @@
-import models from '../models/models.js';
+import models from "../models/models.js"
 
-const { OrderItem } = models;
+const {Order_item} = models;
 
-export const getOrdersItems = async(reg, res, next) => {
-    try {
-        const data = await OrderItem.findAll(); 
+export const getOrder_item = async(req,res,next) => {
+        try{
+            const getOrder_item = await Order_item.findAll()
+    
+            res.status(200).json(getOrder_item)
+        }
+        catch(err){
+            next(err)
+        };
+}
 
-        res.status(200).json(data)
+export const postOrder_item = async(req,res) => {
+    try{
+        const postOrder_item = await Order_item.create()
+
+        res.status(200).json(postOrder_item)
     }
     catch(err){
         next(err)
     };
-};
-
-export const postOrdersItems = async(reg, res, next) => {
-    try {
-        const data = await OrderItem.create(); 
-
-        res.status(200).json(data)
-    }
-    catch(err){
-        next(err)
-    };
-};
+}
