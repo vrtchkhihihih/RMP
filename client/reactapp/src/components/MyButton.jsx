@@ -1,14 +1,12 @@
+import { useState } from "react"
+
 export const MyButton = () => {
-    const handleClick = () => {
-        alert("нажато!")
+    const [count, SetCount] = useState(0)
+    const handlerclick = () => {
+        SetCount(count+1)
     }
-
-    return ( <>
-        <button className = "btn" onClick={handleClick}>Click</button>
-
-
+    return(<>
+        <button onClick={handlerclick}className='btn'>Нажато {count} раз</button>
     </>
     )
-
-
 }
